@@ -49,6 +49,7 @@ func (arr *DynamicArray) RemoveAt(rmIndex int) {
 	}
 	arr.Array = newArr
 	arr.Len--
+	arr.Capacity = arr.Len
 }
 
 func (arr DynamicArray) Print() {
