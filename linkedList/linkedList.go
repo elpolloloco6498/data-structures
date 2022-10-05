@@ -57,7 +57,25 @@ func (l *List) InsertAt(pos int, elt interface{}) {
 	fmt.Println(node.value)
 	insertedNode := &Node{value: elt, next: node.next}
 	node.next = insertedNode
+}
 
+func (l *List) RemoveAt(pos int) {
+	// 2 pointers traverse linkedlist
+	if pos != 1 {
+		i := 1
+		trav1 := l.head
+		trav2 := trav1.next
+		for trav1.next != nil && trav2.next != nil && i < pos-1 {
+			trav1 = trav1.next
+			trav2 = trav2.next
+			i++
+		}
+		// remove node
+		trav1.next = trav2.next
+	}
+	//else
+	l.head = l.head.next
+	
 }
 
 func main() {
@@ -65,11 +83,12 @@ func main() {
 
 	// create linked list
 	list := List{}
-	list.Add(5)
-	list.Add(44)
-	list.Add(3)
-	list.Add(21)
-	list.InsertAt(3, "test")
+	list.Add(7)
+	list.Add(0)
+	list.Add(4)
+	list.Add(9)
+	list.Add(15)
+	//list.InsertAt(3, "test")
+	list.RemoveAt(1)
 	list.Display()
-	// expected 5,44,"test",3,21
 }
