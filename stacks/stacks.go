@@ -2,11 +2,6 @@ package main
 
 import "fmt"
 
-// implement Add
-// implement InsertAt
-// implement RemoveAt TODO
-// implement Display
-
 type Node struct {
 	value interface{} // anytype variable
 	next  *Node
@@ -14,6 +9,18 @@ type Node struct {
 
 type List struct {
 	head *Node
+}
+
+type Stack struct {
+	List
+}
+
+func (s *Stack) Push(elt interface{}) {
+	s.AddTop(elt)
+}
+
+func (s *Stack) Pop() {
+	s.RemoveFirst()
 }
 
 func (n *Node) Display() {
@@ -28,6 +35,12 @@ func (l *List) Display() {
 		node = node.next
 		node.Display()
 	}
+}
+
+func (l *List) AddTop(elt interface{}) {
+	node := &Node{value: elt, next: nil}
+	node.next = l.head
+	l.head = node
 }
 
 func (l *List) Add(elt interface{}) {
@@ -59,6 +72,14 @@ func (l *List) InsertAt(pos int, elt interface{}) {
 	node.next = insertedNode
 }
 
+func (l *List) RemoveFirst() {
+	if l.head.next != nil {
+		l.head = l.head.next
+	} else {
+		fmt.Println("Empty list")
+	}
+}
+
 func (l *List) RemoveAt(pos int) {
 	// 2 pointers traverse linkedlist
 	if pos != 1 {
@@ -75,20 +96,19 @@ func (l *List) RemoveAt(pos int) {
 	}
 	//else
 	l.head = l.head.next
-
 }
 
 func main() {
 	fmt.Println("Hello")
 
 	// create linked list
-	list := List{}
-	list.Add(7)
-	list.Add(0)
-	list.Add(4)
-	list.Add(9)
-	list.Add(15)
-	//list.InsertAt(3, "test")
-	list.RemoveAt(1)
-	list.Display()
+	stack := Stack{}
+	stack.Add(7)
+	stack.Add(0)
+	stack.Add(4)
+	stack.Add(9)
+	stack.Add(15)
+	stack.AddTop(33)
+	stack.Pop()
+	stack.Display()
 }
